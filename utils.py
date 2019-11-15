@@ -130,6 +130,14 @@ def plot_days(years, title, xlabel=None, ylabel=None, figsize=(8,8), fit_trendli
     
     plt.legend()
 
+def plot_trendline(x, y, degree, **kwargs):
+    # sort by x values
+    vals = pd.concat([x, y], axis=1)
+    vals.columns = ['x', 'y']
+    vals.sort_values('x', inplace=True)
+    trendline = np.polyfit(vals['x'].values, vals['y'].values, degree)
+    plt.plot(vals['x'], np.poly1d(trendline)(vals['x']), **kwargs)
+
 ################################
 # Data Cleaning Functions
 ################################
